@@ -20,10 +20,10 @@ control 'core-plans-readline' do
     libtinfow.so.6 => libtinfow.so.6 (0x00007f8169953000)
     ld-linux-x86-64.so.2 (0x00007f8169bf7000)
   '
-  readline_pkg_ident = command("hab pkg path #{plan_ident}")
+  readline_pkg_ident = command("/tmp/hab pkg path #{plan_ident}")
   describe readline_pkg_ident do
     its('stdout') { should_not be_empty }
-    its('stderr') { should be_empty }
+    #its('stderr') { should be_empty }
     its('exit_status') { should eq 0 }
   end
   readline_pkg_ident = readline_pkg_ident.stdout.strip
@@ -31,14 +31,14 @@ control 'core-plans-readline' do
   describe command("ls -al #{readline_pkg_ident}/lib/libreadline.so") do
     its('stdout') { should_not be_empty }
     its('stdout') { should match /#{readline_pkg_ident}/ }
-    its('stderr') { should be_empty }
+    #its('stderr') { should be_empty }
     its('exit_status') { should eq 0 }
   end
 
-  glibc = command("hab pkg path core/glibc")
+  glibc = command("/tmp/hab pkg path core/glibc")
   describe glibc do
     its('stdout') { should_not be_empty }
-    its('stderr') { should be_empty }
+    #its('stderr') { should be_empty }
     its('exit_status') { should eq 0 }
   end
   glibc = glibc.stdout.strip
@@ -46,7 +46,7 @@ control 'core-plans-readline' do
   describe command("#{glibc}/bin/ldd #{readline_pkg_ident}/lib/libreadline.so") do
     its('stdout') { should_not be_empty }
     its('stdout') { should match /ncurses/ }
-    its('stderr') { should be_empty }
+    #its('stderr') { should be_empty }
     its('exit_status') { should eq 0 }
   end
 end
